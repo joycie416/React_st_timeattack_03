@@ -19,18 +19,19 @@ const Comments = ({id}) => {
       queryClient.invalidateQueries({
         queryKey:['comment', id],
       })
+    refetch();
     }
   })
-  
+    
   const showComments = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     refetch();
   }
 
   const handleAdd = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     createComment({text:text.current, postId:id})
-    refetch();
+    // refetch();
   }
 
   if (isPending) {
