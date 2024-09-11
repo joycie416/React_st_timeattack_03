@@ -1,33 +1,65 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { addPost, getPosts } from './axios/api'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const queryClient = useQueryClient();
+  const [title, views] = [useRef(''), useRef(0)]
+
+  const { data: posts, isPending, isError } = useQuery({
+    queryKey: ['posts'],
+    queryFn: getPosts,
+  })
+
+  const {mutate: createPost} = useMutation({
+    mutationFn: addPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey:['posts'],
+      })
+    }
+  })
+  
+  const handleAdd = (e) => {
+    e.preventDefault();
+    createPost({title:title.current, views:views.current});
+  }
+
+
+  if (isPending) {
+    return (
+      <div>
+        로딩중입니다.
+      </div>
+    )
+  }
+
+  if (isError) {
+    return (
+      <div>
+        오류가 발생했습니다.
+      </div>
+    )
+  }
 
   return (
     <>
+      <form onSubmit={handleAdd}>
+        <input placeholder='title' onChange={(e) => {title.current = e.target.value}}/>
+        <input placeholder='views' type='number' onChange={(e) => {views.current = +e.target.value}}/>
+        <button>저장</button>
+      </form>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {posts?.map(post => (
+          <div key={post.id}>
+            <p>제목 : {post.title}</p>
+            <p>views : {post.views}</p>
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
