@@ -54,7 +54,7 @@ function App() {
     <>
     <div>
       {isProfilePending || isProfileError ? <p>profile 로딩중/에러</p>
-      : <div><p>profile : {profiles.name}</p></div>}
+      : <div><p>profile : {profiles?.name}</p></div>}
     </div>
       <form onSubmit={handleAdd}>
         <input placeholder='title' onChange={(e) => {title.current = e.target.value}}/>

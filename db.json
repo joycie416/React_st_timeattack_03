@@ -14,6 +14,11 @@
       "id": "e8ed",
       "title": "title",
       "views": 123
+    },
+    {
+      "id": "7ccc",
+      "title": "title22",
+      "views": 22
     }
   ],
   "comments": [
@@ -46,6 +51,36 @@
       "id": "9ed3",
       "text": "asdf",
       "postId": "2"
+    },
+    {
+      "id": "1855",
+      "text": "댓글",
+      "postId": "e8ed"
+    },
+    {
+      "id": "eb7b",
+      "text": "",
+      "postId": "e8ed"
+    },
+    {
+      "id": "912d",
+      "text": "대앳글",
+      "postId": "e8ed"
+    },
+    {
+      "id": "7809",
+      "text": "hi",
+      "postId": "e8ed"
+    },
+    {
+      "id": "2e4f",
+      "text": "22222",
+      "postId": "7ccc"
+    },
+    {
+      "id": "03fb",
+      "text": "23232",
+      "postId": "7ccc"
     }
   ],
   "profile": {
